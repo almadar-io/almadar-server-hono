@@ -87,6 +87,9 @@ export {
   ChangeSetStore,
   ValidationStore,
   SchemaProtectionService,
+  getRuntimeEntity,
+  clearRuntimeEntity,
+  resetRuntimeEntityStore,
 } from '@almadar/server';
 
 // ─── Utils (framework-agnostic, re-exported from @almadar/server) ───────────
