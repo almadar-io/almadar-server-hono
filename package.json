@@ -1,6 +1,6 @@
 {
   "name": "@almadar/server-hono",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Hono server infrastructure for Almadar applications",
   "type": "module",
   "main": "./dist/index.js",
@@ -28,8 +28,9 @@
     "prepare": "git config core.hooksPath .githooks"
   },
   "dependencies": {
-    "@almadar/core": ">=4.8.2",
-    "@almadar/server": ">=2.9.0",
+    "@almadar/core": ">=7.14.0",
+    "@almadar/logger": ">=1.1.0",
+    "@almadar/server": ">=2.11.0",
     "hono": "^4.7.0"
   },
   "peerDependencies": {
