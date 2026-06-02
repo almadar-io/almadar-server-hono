@@ -5,7 +5,7 @@ import type { FirebaseEnv } from '../types.js';
 
 const BEARER_PREFIX = 'Bearer ';
 
-/** Fake dev user injected when NODE_ENV=development and no auth header is present */
+/** Fake dev user injected ONLY when ALLOW_DEV_AUTH_BYPASS=true and no auth header is present */
 const DEV_USER: DecodedIdToken = {
   uid: 'dev-user-001',
   email: 'dev@localhost',
@@ -26,13 +26,13 @@ const DEV_USER: DecodedIdToken = {
  * Firebase authentication middleware for Hono.
  * Ports the Express authenticateFirebase from @almadar/server.
  *
- * In development mode, skips auth when no token is present and injects DEV_USER.
+ * Dev bypass injects DEV_USER ONLY when ALLOW_DEV_AUTH_BYPASS=true (never keyed on NODE_ENV).
  */
 export const authenticateFirebase = createMiddleware<FirebaseEnv>(async (c, next) => {
   const authorization = c.req.header('Authorization');
 
-  // Dev bypass: in development mode, skip auth if no token is provided
-  if (env.NODE_ENV === 'development' && (!authorization || !authorization.startsWith(BEARER_PREFIX))) {
+  // Dev bypass: ONLY when explicitly opted in via ALLOW_DEV_AUTH_BYPASS (fail closed by default)
+  if (env.ALLOW_DEV_AUTH_BYPASS === 'true' && (!authorization || !authorization.startsWith(BEARER_PREFIX))) {
     logger.debug('Dev bypass auth');
     c.set('firebaseUser', DEV_USER);
     return await next();
