@@ -122,11 +122,11 @@ export type {
   ServerServiceContracts,
 } from '@almadar/server';
 
-// ─── DeepAgent lazy exports (require @almadar-io/agent as optional peer) ────
+// ─── Rabit compatibility exports (re-exported from @almadar/server) ─────────
 export {
-  getMemoryManager,
-  resetMemoryManager,
-  getSessionManager,
-  resetSessionManager,
+  getOrbitalMemory,
+  resetOrbitalMemory,
+  getSessionStore,
+  resetSessionStore,
   createServerSkillAgent,
 } from '@almadar/server';

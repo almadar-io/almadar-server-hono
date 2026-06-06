@@ -2,17 +2,13 @@
  * Observability Routes (Hono)
  *
  * Provides endpoints for metrics, health checks, and telemetry.
- * Requires @almadar-io/agent as an optional peer dependency.
+ * The DeepAgent observability collector dependency has been removed;
+ * these endpoints now return server-native metrics.
  *
  * @packageDocumentation
  */
 
 import { Hono } from 'hono';
-
-async function getObservabilityCollector() {
-  const mod = await import('@almadar-io/agent');
-  return mod.getObservabilityCollector();
-}
 
 const app = new Hono();
 
@@ -21,8 +17,12 @@ const app = new Hono();
  */
 app.get('/metrics', async (c) => {
   try {
-    const collector = await getObservabilityCollector();
-    const snapshot = collector.getPerformanceSnapshot();
+    const snapshot = {
+      uptime: process.uptime(),
+      requestCount: 0,
+      memory: process.memoryUsage(),
+      timestamp: Date.now(),
+    };
     return c.json(snapshot);
   } catch (error) {
     console.error('Metrics error:', error);
@@ -35,8 +35,7 @@ app.get('/metrics', async (c) => {
  */
 app.get('/health', async (c) => {
   try {
-    const collector = await getObservabilityCollector();
-    const health = await collector.healthCheck();
+    const health = [{ status: 'healthy', name: 'server', timestamp: Date.now() }];
     const allHealthy = health.every((h) => h.status === 'healthy');
 
     return c.json(
@@ -57,33 +56,24 @@ app.get('/health', async (c) => {
  * GET /sessions/:threadId/telemetry - Get session telemetry
  */
 app.get('/sessions/:threadId/telemetry', async (c) => {
-  try {
-    const collector = await getObservabilityCollector();
-    const telemetry = collector.getSessionTelemetry(c.req.param('threadId'));
-
-    if (!telemetry) {
-      return c.json({ error: 'Session not found' }, 404);
-    }
-
-    return c.json(telemetry);
-  } catch (error) {
-    console.error('Telemetry error:', error);
-    return c.json({ error: 'Failed to get telemetry' }, 500);
-  }
+  return c.json(
+    {
+      error: 'Session telemetry is deprecated. Use @almadar-io/rabit trace events instead.',
+    },
+    501,
+  );
 });
 
 /**
  * GET /active-sessions - Get active sessions
  */
 app.get('/active-sessions', async (c) => {
-  try {
-    const collector = await getObservabilityCollector();
-    const sessions = collector.getActiveSessions();
-    return c.json(sessions);
-  } catch (error) {
-    console.error('Active sessions error:', error);
-    return c.json({ error: 'Failed to get active sessions' }, 500);
-  }
+  return c.json(
+    {
+      error: 'Active sessions tracking is deprecated. Use @almadar-io/rabit SessionStore instead.',
+    },
+    501,
+  );
 });
 
 export { app as observabilityRouter };

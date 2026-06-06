@@ -8,5 +8,5 @@ export default defineConfig({
   sourcemap: true,
   splitting: false,
   treeshake: true,
-  external: ['@almadar/server', 'hono', '@hono/zod-validator', 'firebase-admin', '@almadar-io/agent'],
+  external: ['@almadar/server', 'hono', '@hono/zod-validator', 'firebase-admin', '@almadar-io/rabit'],
 });

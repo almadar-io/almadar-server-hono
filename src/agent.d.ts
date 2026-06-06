@@ -1,14 +1,56 @@
-declare module '@almadar-io/agent' {
-  interface HealthCheckResult {
-    status: string;
-  }
-
-  interface ObservabilityCollector {
-    getPerformanceSnapshot(): unknown;
-    healthCheck(): Promise<HealthCheckResult[]>;
-    getSessionTelemetry(threadId: string): unknown;
-    getActiveSessions(): unknown;
-  }
-
-  export function getObservabilityCollector(): ObservabilityCollector;
+declare module '@almadar-io/rabit' {
+  // Canonical SSE event vocabulary re-exported for hono-server consumers.
+  export type {
+    SSEEvent,
+    SSEEventType,
+    SSEEventBase,
+    StartEvent,
+    MessageEvent,
+    ToolCallEvent,
+    ToolResultEvent,
+    TodoUpdateEvent,
+    TodoDetailEvent,
+    FileOperationEvent,
+    FileWrittenEvent,
+    SchemaUpdateEvent,
+    GenerationLogEvent,
+    SubagentEvent,
+    SubagentStartEvent,
+    SubagentProgressEvent,
+    SubagentCompleteEvent,
+    InterruptEvent,
+    ErrorEvent,
+    CancelledEvent,
+    CompleteEvent,
+    AppCreatedEvent,
+    SchemaPhaseValidatedEvent,
+    SchemaPhaseUpdateEvent,
+    OrbitalAddedEvent,
+    OrbitalSchemaCompleteEvent,
+    ProcessStartEvent,
+    ProcessCompleteEvent,
+    ProcessErrorEvent,
+    ProcessRepairEvent,
+    ProcessRepairCompleteEvent,
+    ParamsRepairEmittedEvent,
+    ChangesetRecordedEvent,
+    SnapshotCreatedEvent,
+    GateStartEvent,
+    GateCompleteEvent,
+    JepaValidityEvent,
+    JepaErrorsEvent,
+    JepaGapEvent,
+    JepaRepairEvent,
+    ViewChangeEvent,
+    EditModeEnterEvent,
+    EditModeExitEvent,
+    EditSelectEvent,
+    CoordinatorDecisionEvent,
+    PlanCommittedEvent,
+    PendingQuestionEvent,
+    ClarificationQuestionEvent,
+    CoordinatorThinkingEvent,
+    ChatMessageAppendedEvent,
+    AnalysisCompleteEvent,
+  } from '@almadar-io/rabit';
 }
