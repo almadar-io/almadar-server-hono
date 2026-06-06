@@ -1,4 +1,6 @@
 declare module '@almadar-io/rabit' {
+  import type { JsonValue } from '@almadar/core';
+
   // Canonical SSE event vocabulary re-exported for hono-server consumers.
   export type {
     SSEEvent,
@@ -53,4 +55,10 @@ declare module '@almadar-io/rabit' {
     ChatMessageAppendedEvent,
     AnalysisCompleteEvent,
   } from '@almadar-io/rabit';
+
+  export interface TraceEvent {
+    type: string;
+    timestamp: number;
+    [key: string]: JsonValue;
+  }
 }
