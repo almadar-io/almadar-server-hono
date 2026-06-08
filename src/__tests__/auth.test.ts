@@ -3,7 +3,9 @@ import { Hono } from 'hono';
 
 // Mock @almadar/server before importing our module
 vi.mock('@almadar/server', () => ({
-  env: { NODE_ENV: 'development' },
+  // The middleware gates its dev bypass on ALLOW_DEV_AUTH_BYPASS (fail-closed),
+  // NOT on NODE_ENV.
+  env: { NODE_ENV: 'development', ALLOW_DEV_AUTH_BYPASS: 'true' },
   logger: {
     debug: vi.fn(),
     info: vi.fn(),
@@ -39,7 +41,7 @@ describe('authenticateFirebase', () => {
     vi.clearAllMocks();
   });
 
-  it('injects dev user in development mode without auth header', async () => {
+  it('injects dev user when ALLOW_DEV_AUTH_BYPASS=true without auth header', async () => {
     const app = new Hono<FirebaseEnv>();
     app.use('*', authenticateFirebase);
     app.get('/test', (c) => {
