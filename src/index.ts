@@ -7,6 +7,24 @@
  * @packageDocumentation
  */
 
+// ─── Hono-native lib ────────────────────────────────────────────────────────
+export {
+  setupHonoEventBroadcast,
+  getHonoWebSocketServer,
+  closeHonoWebSocketServer,
+  getHonoConnectedClientCount,
+} from './lib/websocket.js';
+
+// ─── SSE helpers (re-exported from @almadar/server) ─────────────────────────
+export {
+  setupSSE,
+  sendSSEEvent,
+  formatSSEEvent,
+  sendSSEDone,
+  closeSSE,
+  type SSEEvent,
+} from '@almadar/server';
+
 // ─── Hono-native middleware (replaces Express versions) ─────────────────────
 export { errorHandler, notFoundHandler } from './middleware/error-handler.js';
 export { authenticateFirebase } from './middleware/auth.js';
