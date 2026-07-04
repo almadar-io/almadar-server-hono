@@ -1,6 +1,6 @@
 {
   "name": "@almadar/server-hono",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Hono server infrastructure for Almadar applications",
   "type": "module",
   "main": "./dist/index.js",
