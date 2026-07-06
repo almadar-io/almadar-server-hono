@@ -92,6 +92,12 @@ export {
   type PaginationOptions,
   type PaginatedResult,
 } from '@almadar/server';
+export {
+  getSubstrateService,
+  setSubstrateService,
+  resetSubstrateService,
+  type SubstrateService,
+} from '@almadar/server';
 
 // ─── Compat re-exports (deprecated lazy proxies from @almadar/server) ───────
 export { dataService, mockDataService, serverEventBus } from '@almadar/server';
