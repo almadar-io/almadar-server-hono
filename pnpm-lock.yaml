@@ -18,8 +18,8 @@ importers:
         specifier: '>=1.3.0'
         version: 1.3.0
       '@almadar/server':
-        specifier: ^2.14.2
-        version: 2.14.2(@almadar-io/rabit@0.62.0(@opentelemetry/api@1.9.1)(express@5.2.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(ws@8.21.0))(express@5.2.1)
+        specifier: ^2.20.0
+        version: 2.20.0(@almadar-io/rabit@0.62.0(@opentelemetry/api@1.9.1)(express@5.2.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(ws@8.21.0))(express@5.2.1)
       hono:
         specifier: ^4.7.0
         version: 4.12.23
@@ -74,6 +74,9 @@ packages:
 
   '@almadar-io/skills@2.23.0':
     resolution: {integrity: sha512-/EHJGgt6VjyTmjQECUM9UknhWYNmSeWrrH66x8+uxLsmSJWba87YTaF5BJh+E8WZicqRzf999cahwrAmNzVFtA==, tarball: https://npm.pkg.github.com/download/@almadar-io/skills/2.23.0/15d0894482206a391682ce4ee16a92b3743c53be}
+
+  '@almadar/core@10.24.0':
+    resolution: {integrity: sha512-WbKZcfq8W+6zBFWNnrRaSUtdu4CE5svoCRn49fglkc9dhrQHfxRncpHMzSeniqnZfQn3y7YBYC/N78nuLPgWQw==}
 
   '@almadar/core@9.10.1':
     resolution: {integrity: sha512-TrD3/igGTM1tTH7kNzWpcB9SCFmiz0uyDCqyg7HZcSHhJa6sbVPhinyqCsswM0hK6pO/IKaE/uBXqHErzPe/BA==}
@@ -140,8 +143,8 @@ packages:
     peerDependencies:
       express: ^5.0.0
 
-  '@almadar/server@2.14.2':
-    resolution: {integrity: sha512-kQvrTxUTS8R2d190QkhhpyHlI8csqnfXN2mSORSds0vpVUIltuLr816gdmJGfWFNQs79X9SJAl/fZQsbxcFz/g==}
+  '@almadar/server@2.20.0':
+    resolution: {integrity: sha512-Ew3nKWG5RRrsHasH0JVMSeOArrAZIb4V3k5BnDguuyQj5LUOOLWYbVvYhMasfg4sMDu7phnBCnL4Iiv+oQWZkQ==}
     peerDependencies:
       '@almadar-io/rabit': '>=0.60.3'
       express: ^5.0.0
@@ -2491,6 +2494,11 @@ snapshots:
       - '@opentelemetry/sdk-trace-base'
       - ws
 
+  '@almadar/core@10.24.0':
+    dependencies:
+      '@almadar/patterns': 2.48.0
+      zod: 3.25.76
+
   '@almadar/core@9.10.1':
     dependencies:
       '@almadar/patterns': 2.37.1
@@ -2590,9 +2598,9 @@ snapshots:
       '@faker-js/faker': 9.9.0
       express: 5.2.1
 
-  '@almadar/server@2.14.2(@almadar-io/rabit@0.62.0(@opentelemetry/api@1.9.1)(express@5.2.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(ws@8.21.0))(express@5.2.1)':
+  '@almadar/server@2.20.0(@almadar-io/rabit@0.62.0(@opentelemetry/api@1.9.1)(express@5.2.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(ws@8.21.0))(express@5.2.1)':
     dependencies:
-      '@almadar/core': 9.10.1
+      '@almadar/core': 10.24.0
       '@almadar/logger': 1.3.0
       '@faker-js/faker': 9.9.0
       cors: 2.8.6
