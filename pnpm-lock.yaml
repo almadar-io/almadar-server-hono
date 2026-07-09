@@ -15,8 +15,8 @@ importers:
         specifier: ^1.9.0
         version: 1.9.0
       '@almadar/server':
-        specifier: ^2.20.0
-        version: 2.20.0
+        specifier: ^2.23.0
+        version: 2.23.0
       hono:
         specifier: ^4.7.0
         version: 4.12.23
@@ -74,10 +74,10 @@ packages:
   '@almadar/logger@1.9.0':
     resolution: {integrity: sha512-863+UD4n3cP4tXReJFk6VpAc0mHzQxR6ehAroLKfy3ns09Yjs1v6y2oROiBMo0M18AmkwtitErNT+wqA5bj4sA==}
 
-  '@almadar/server@2.20.0':
-    resolution: {integrity: sha512-Ew3nKWG5RRrsHasH0JVMSeOArrAZIb4V3k5BnDguuyQj5LUOOLWYbVvYhMasfg4sMDu7phnBCnL4Iiv+oQWZkQ==}
+  '@almadar/server@2.23.0':
+    resolution: {integrity: sha512-+KzQd/JkQhfRjvBPnySXKLIG50z8zUx1pNnb7NSod6fUxwOO/gPeL+zZoHdelqIeoyw1DwNhL1dv4BNsXRbAWw==}
     peerDependencies:
-      '@almadar-io/rabit': '>=0.60.3'
+      '@almadar-io/rabit': ^0.64.29
       express: ^5.0.0
     peerDependenciesMeta:
       '@almadar-io/rabit':
@@ -1887,7 +1887,7 @@ snapshots:
     dependencies:
       '@almadar/core': 10.27.0
 
-  '@almadar/server@2.20.0':
+  '@almadar/server@2.23.0':
     dependencies:
       '@almadar/core': 10.27.0
       '@almadar/logger': 1.9.0
