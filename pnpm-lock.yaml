@@ -17,7 +17,7 @@ overrides:
   '@types/three': 0.160.0
   '@almadar/std': ^16.103.2
   '@almadar/ui': ^5.93.0
-  '@almadar/core': ^10.24.0
+  '@almadar/core': ^10.25.0
 
 importers:
 
@@ -27,7 +27,7 @@ importers:
         specifier: '>=0.60.3'
         version: 0.62.0(@opentelemetry/api@1.9.1)(express@5.2.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(ws@8.21.0)
       '@almadar/core':
-        specifier: ^10.24.0
+        specifier: ^10.25.0
         version: link:../almadar-core
       '@almadar/logger':
         specifier: '>=1.3.0'
@@ -90,8 +90,8 @@ packages:
   '@almadar-io/skills@2.23.0':
     resolution: {integrity: sha512-/EHJGgt6VjyTmjQECUM9UknhWYNmSeWrrH66x8+uxLsmSJWba87YTaF5BJh+E8WZicqRzf999cahwrAmNzVFtA==, tarball: https://npm.pkg.github.com/download/@almadar-io/skills/2.23.0/15d0894482206a391682ce4ee16a92b3743c53be}
 
-  '@almadar/core@10.24.0':
-    resolution: {integrity: sha512-WbKZcfq8W+6zBFWNnrRaSUtdu4CE5svoCRn49fglkc9dhrQHfxRncpHMzSeniqnZfQn3y7YBYC/N78nuLPgWQw==}
+  '@almadar/core@10.25.0':
+    resolution: {integrity: sha512-GkwgpunROGSjjO1N9UcTE9Zhy7dXggbrLddXVfWo9C0xbTPzEq4tjAL2PxJSMzkmcxK/R5lNchAqwHMer5fBNw==}
 
   '@almadar/eslint-plugin@2.8.2':
     resolution: {integrity: sha512-iQGH5MdsfcEPGUeImgS3XBWLfBRc0uO9+0Kyy87WQf/nc4hUoAEPxov5C/JAYe1tLoL34dLBIyKDm/SFeYPBsA==}
@@ -107,7 +107,7 @@ packages:
   '@almadar/llm@2.24.0':
     resolution: {integrity: sha512-S/f4mUAl3qC73uV3J2hG+jdsIHN8jwp0l/aSSf11/3HRLdJ09QBOYRcb9BK+9B4vpSIoX+FG1Tb7vjBWVpL4CQ==}
     peerDependencies:
-      '@almadar/core': ^10.24.0
+      '@almadar/core': ^10.25.0
 
   '@almadar/logger@1.3.0':
     resolution: {integrity: sha512-6WhnbfjQqHEy2hoRlvZM0RYr8trAra5t82IhOOIRPIoc2/jbpoIqINZ/dGlbndoa3g1aC+4LrdH35H0TzKdEhw==}
@@ -2467,15 +2467,15 @@ snapshots:
 
   '@almadar-io/behaviors@0.16.9':
     dependencies:
-      '@almadar/core': 10.24.0
+      '@almadar/core': 10.25.0
 
   '@almadar-io/rabit@0.62.0(@opentelemetry/api@1.9.1)(express@5.2.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(ws@8.21.0)':
     dependencies:
       '@almadar-io/behaviors': 0.16.9
       '@almadar-io/skills': 2.23.0(@opentelemetry/api@1.9.1)(ws@8.21.0)
-      '@almadar/core': 10.24.0
+      '@almadar/core': 10.25.0
       '@almadar/integrations': 2.13.0(@opentelemetry/api@1.9.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(ws@8.21.0)
-      '@almadar/llm': 2.24.0(@almadar/core@10.24.0)(@opentelemetry/api@1.9.1)(ws@8.21.0)
+      '@almadar/llm': 2.24.0(@almadar/core@10.25.0)(@opentelemetry/api@1.9.1)(ws@8.21.0)
       '@almadar/logger': 1.3.0
       '@almadar/orb': 6.17.0
       '@almadar/patterns': 2.48.0
@@ -2497,8 +2497,8 @@ snapshots:
 
   '@almadar-io/skills@2.23.0(@opentelemetry/api@1.9.1)(ws@8.21.0)':
     dependencies:
-      '@almadar/core': 10.24.0
-      '@almadar/llm': 2.24.0(@almadar/core@10.24.0)(@opentelemetry/api@1.9.1)(ws@8.21.0)
+      '@almadar/core': 10.25.0
+      '@almadar/llm': 2.24.0(@almadar/core@10.25.0)(@opentelemetry/api@1.9.1)(ws@8.21.0)
       '@almadar/patterns': 2.48.0
       '@almadar/std': 16.134.0
       commander: 12.1.0
@@ -2509,7 +2509,7 @@ snapshots:
       - '@opentelemetry/sdk-trace-base'
       - ws
 
-  '@almadar/core@10.24.0':
+  '@almadar/core@10.25.0':
     dependencies:
       '@almadar/patterns': 2.101.0
       zod: 3.25.76
@@ -2521,13 +2521,13 @@ snapshots:
 
   '@almadar/evaluator@2.12.2':
     dependencies:
-      '@almadar/core': 10.24.0
+      '@almadar/core': 10.25.0
       '@almadar/std': 16.134.0
 
   '@almadar/integrations@2.13.0(@opentelemetry/api@1.9.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(ws@8.21.0)':
     dependencies:
-      '@almadar/core': 10.24.0
-      '@almadar/llm': 2.24.0(@almadar/core@10.24.0)(@opentelemetry/api@1.9.1)(ws@8.21.0)
+      '@almadar/core': 10.25.0
+      '@almadar/llm': 2.24.0(@almadar/core@10.25.0)(@opentelemetry/api@1.9.1)(ws@8.21.0)
       '@almadar/logger': 1.3.0
       '@almadar/patterns': 2.48.0
       '@sendgrid/mail': 8.1.6
@@ -2548,9 +2548,9 @@ snapshots:
       - supports-color
       - ws
 
-  '@almadar/llm@2.24.0(@almadar/core@10.24.0)(@opentelemetry/api@1.9.1)(ws@8.21.0)':
+  '@almadar/llm@2.24.0(@almadar/core@10.25.0)(@opentelemetry/api@1.9.1)(ws@8.21.0)':
     dependencies:
-      '@almadar/core': 10.24.0
+      '@almadar/core': 10.25.0
       '@almadar/logger': 1.3.0
       '@anthropic-ai/sdk': 0.52.0
       '@langchain/anthropic': 1.5.0(@langchain/core@1.2.0(@opentelemetry/api@1.9.1)(openai@6.44.0(ws@8.21.0)(zod@3.25.76))(ws@8.21.0))
@@ -2566,11 +2566,11 @@ snapshots:
 
   '@almadar/logger@1.3.0':
     dependencies:
-      '@almadar/core': 10.24.0
+      '@almadar/core': 10.25.0
 
   '@almadar/logger@1.7.0':
     dependencies:
-      '@almadar/core': 10.24.0
+      '@almadar/core': 10.25.0
 
   '@almadar/orb-darwin-arm64@6.17.0':
     optional: true
@@ -2597,15 +2597,15 @@ snapshots:
 
   '@almadar/patterns@2.101.0':
     dependencies:
-      '@almadar/core': 10.24.0
+      '@almadar/core': 10.25.0
 
   '@almadar/patterns@2.48.0':
     dependencies:
-      '@almadar/core': 10.24.0
+      '@almadar/core': 10.25.0
 
   '@almadar/runtime@6.9.5(express@5.2.1)':
     dependencies:
-      '@almadar/core': 10.24.0
+      '@almadar/core': 10.25.0
       '@almadar/evaluator': 2.12.2
       '@almadar/logger': 1.3.0
       '@almadar/std': 16.134.0
@@ -2614,7 +2614,7 @@ snapshots:
 
   '@almadar/server@2.20.0(@almadar-io/rabit@0.62.0(@opentelemetry/api@1.9.1)(express@5.2.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(ws@8.21.0))(express@5.2.1)':
     dependencies:
-      '@almadar/core': 10.24.0
+      '@almadar/core': 10.25.0
       '@almadar/logger': 1.7.0
       '@faker-js/faker': 9.9.0
       cors: 2.8.6
@@ -2634,12 +2634,12 @@ snapshots:
 
   '@almadar/std@16.134.0':
     dependencies:
-      '@almadar/core': 10.24.0
+      '@almadar/core': 10.25.0
 
   '@almadar/workspace@0.3.0(@opentelemetry/api@1.9.1)(ws@8.21.0)':
     dependencies:
-      '@almadar/core': 10.24.0
-      '@almadar/llm': 2.24.0(@almadar/core@10.24.0)(@opentelemetry/api@1.9.1)(ws@8.21.0)
+      '@almadar/core': 10.25.0
+      '@almadar/llm': 2.24.0(@almadar/core@10.25.0)(@opentelemetry/api@1.9.1)(ws@8.21.0)
       typescript: 5.9.3
     transitivePeerDependencies:
       - '@opentelemetry/api'
