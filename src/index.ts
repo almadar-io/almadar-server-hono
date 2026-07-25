@@ -67,7 +67,7 @@ export {
   type EventPersistenceOptions,
   type IEventStore,
 } from '@almadar/server';
-export { initializeFirebase, getFirestore, getAuth, admin, db } from '@almadar/server';
+export { initializeFirebase, getFirestore, getAuth, db } from '@almadar/server';
 export {
   setupEventBroadcast,
   getWebSocketServer,
