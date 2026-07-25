@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@almadar/core':
-        specifier: ^10.34.0
-        version: 10.34.0
+        specifier: ^10.36.0
+        version: 10.36.0
       '@almadar/logger':
         specifier: ^1.10.0
         version: 1.10.0
       '@almadar/server':
-        specifier: ^2.27.0
-        version: 2.27.0
+        specifier: ^2.28.0
+        version: 2.28.0
       hono:
         specifier: ^4.7.0
         version: 4.12.23
@@ -66,8 +66,8 @@ importers:
 
 packages:
 
-  '@almadar/core@10.34.0':
-    resolution: {integrity: sha512-XHm2wE6IypSgmaijH6ILS7wS3LnV/YQKbV0a4MGAjNdLf5QL+1H4Z0zNY6hLiDWhTF5ZTVoj7OgEUdeWFn0+Pw==}
+  '@almadar/core@10.36.0':
+    resolution: {integrity: sha512-72ffLG336X9BxVDsAbwlT98AkDWRiZz8mfsMnciCmjpqfYrI263HumftnUBBZu61bUp4Ze0MwN3vWeJatDM8bw==}
 
   '@almadar/eslint-plugin@2.15.0':
     resolution: {integrity: sha512-8mQTnuU7eHOSpCgAag5VEywVce9iWFNC2j6cKvrwjOH/cbak+6Akgnp/zjK3bvy6xoVp6k/4H6bIh/WkRhbfSg==}
@@ -77,10 +77,10 @@ packages:
   '@almadar/logger@1.10.0':
     resolution: {integrity: sha512-QEAEiDg72wRkdYgpaa4pipx+Cd/QBHkNUSyCTj98EpTtIrziLek765qwDbAivEwjuKfS79CPUs3sF4baiZAgwQ==}
 
-  '@almadar/server@2.27.0':
-    resolution: {integrity: sha512-nqB+lUDvW/JGl1/UVm7t3pVjUcSAfGuqnb3LPBLRqgIsxuP/NDcjrTCBWp2uvxo59r7wwruv7wL7MB69x03dJw==}
+  '@almadar/server@2.28.0':
+    resolution: {integrity: sha512-JYjWXb/OJ28LlUaSwm0CSB5SIRbmX9DJKvS9y2O9ibZjonh0tERmzEGik2L9I2giIBOM+fdDfe0WT3+yR4/H7Q==}
     peerDependencies:
-      '@almadar-io/rabit': ^0.64.34
+      '@almadar-io/rabit': ^0.64.36
       express: ^5.0.0
     peerDependenciesMeta:
       '@almadar-io/rabit':
@@ -2205,7 +2205,7 @@ packages:
 
 snapshots:
 
-  '@almadar/core@10.34.0':
+  '@almadar/core@10.36.0':
     dependencies:
       zod: 3.25.76
 
@@ -2216,11 +2216,11 @@ snapshots:
 
   '@almadar/logger@1.10.0':
     dependencies:
-      '@almadar/core': 10.34.0
+      '@almadar/core': 10.36.0
 
-  '@almadar/server@2.27.0':
+  '@almadar/server@2.28.0':
     dependencies:
-      '@almadar/core': 10.34.0
+      '@almadar/core': 10.36.0
       '@almadar/logger': 1.10.0
       '@faker-js/faker': 9.9.0
       cors: 2.8.6
