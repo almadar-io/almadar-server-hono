@@ -12,6 +12,13 @@ vi.mock('@almadar/server', () => ({
     warn: vi.fn(),
     error: vi.fn(),
   },
+  // auth.ts delegates the dev bypass to the shared resolveDevIdentity
+  // (commit afb1f22); mirror its contract: dev identity only when no
+  // Authorization header, undefined otherwise so the real verify path runs.
+  resolveDevIdentity: vi.fn((authorization?: string) =>
+    authorization === undefined || authorization === ''
+      ? { uid: 'dev-user-001', email: 'dev@localhost' }
+      : undefined),
   getAuth: vi.fn(() => ({
     verifyIdToken: vi.fn().mockResolvedValue({
       uid: 'real-user-123',

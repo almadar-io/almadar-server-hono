@@ -9,6 +9,7 @@
  */
 
 import { Hono } from 'hono';
+import { integrationHealthChecks } from '@almadar/server';
 
 const app = new Hono();
 
@@ -35,7 +36,10 @@ app.get('/metrics', async (c) => {
  */
 app.get('/health', async (c) => {
   try {
-    const health = [{ status: 'healthy', name: 'server', timestamp: Date.now() }];
+    const health = [
+      { status: 'healthy', name: 'server', detail: '', timestamp: Date.now() },
+      ...integrationHealthChecks(),
+    ];
     const allHealthy = health.every((h) => h.status === 'healthy');
 
     return c.json(

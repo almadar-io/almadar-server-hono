@@ -33,6 +33,23 @@ export { validateBody, validateQuery, validateParams } from './middleware/valida
 // ─── Hono-native routers (replaces Express versions) ────────────────────────
 export { debugEventsRouter } from './lib/debug-router.js';
 export { observabilityRouter } from './routes/observability.js';
+export { pushRouter, pushServiceWorkerHandler } from './routes/push.js';
+export { createHooksRouter } from './routes/hooks.js';
+export { reportsRouter } from './routes/reports.js';
+export type { HookProvider, HookDispatch, HooksRouterOptions } from './routes/hooks.js';
+
+// ─── Push server surface (re-exported from @almadar/server) ─────────────────
+export { vapidPublicKey, PUSH_SERVICE_WORKER_SOURCE, PUSH_SERVICE_WORKER_PATH } from '@almadar/server';
+export { FirestoreCredentialPersistence } from '@almadar/server';
+export {
+  renderReport,
+  renderCsv,
+  renderXlsx,
+  renderPdf,
+  reportFilename,
+  REPORT_CONTENT_TYPES,
+} from '@almadar/server';
+export type { ReportTable, ReportColumn, ReportCell, ReportFormat } from '@almadar/server';
 
 // ─── Hono Env types ─────────────────────────────────────────────────────────
 export type { AppEnv, FirebaseEnv, FullUserEnv, FirebaseVariables, UserContextVariables, UserContext } from './types.js';
@@ -43,6 +60,11 @@ export { AppError, NotFoundError, ValidationError, UnauthorizedError, ForbiddenE
 // ─── Lib exports (framework-agnostic, re-exported from @almadar/server) ─────
 export { env } from '@almadar/server';
 export { logger } from '@almadar/server';
+export {
+  validateIntegrationEnv,
+  integrationHealthChecks,
+  type IntegrationHealthCheck,
+} from '@almadar/server';
 export {
   EventBus,
   getServerEventBus,
