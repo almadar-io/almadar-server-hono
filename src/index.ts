@@ -40,7 +40,7 @@ export type { HookProvider, HookDispatch, HooksRouterOptions } from './routes/ho
 
 // ─── Push server surface (re-exported from @almadar/server) ─────────────────
 export { vapidPublicKey, PUSH_SERVICE_WORKER_SOURCE, PUSH_SERVICE_WORKER_PATH } from '@almadar/server';
-export { FirestoreCredentialPersistence } from '@almadar/server';
+export { FirestoreCredentialPersistence, FirestorePendingGrantStore, type FirestorePendingGrantStoreOptions } from '@almadar/server';
 export {
   renderReport,
   renderCsv,
