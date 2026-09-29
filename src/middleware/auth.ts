@@ -1,40 +1,30 @@
 import { createMiddleware } from 'hono/factory';
-import { getAuth, logger, resolveDevIdentity } from '@almadar/server';
+import type { Context } from 'hono';
+import { authenticateBearer } from '@almadar/server';
 import type { FirebaseEnv } from '../types.js';
 
-const BEARER_PREFIX = 'Bearer ';
+/** Returns the Identity Platform tenant whose users may call this request's app, or null when it has none. */
+export type HonoTenantOf = (c: Context<FirebaseEnv>) => string | null;
 
 /**
- * Firebase authentication middleware for Hono.
- * Ports the Express authenticateFirebase from @almadar/server.
- *
- * The dev-bypass identity (fixed dev user, or a persona from the shell's mocked
- * sign-in token) comes from the shared `resolveDevIdentity` so the two servers
- * cannot disagree about who the viewer is.
+ * Firebase authentication for Hono: an adapter over `@almadar/server`'s `authenticateBearer`, the
+ * same verification (dev bypass, project vs tenant tokens) the Express middlewares use, so the two
+ * servers cannot disagree about who the viewer is.
  */
-export const authenticateFirebase = createMiddleware<FirebaseEnv>(async (c, next) => {
-  const authorization = c.req.header('Authorization');
-
-  const devUser = resolveDevIdentity(authorization);
-  if (devUser) {
-    logger.debug(`Dev bypass auth: ${devUser.uid}`);
-    c.set('firebaseUser', devUser);
-    return await next();
-  }
-
-  try {
-    if (!authorization || !authorization.startsWith(BEARER_PREFIX)) {
-      return c.json({ error: 'Authorization header missing or malformed' }, 401);
-    }
-
-    const token = authorization.slice(BEARER_PREFIX.length);
-    const decodedToken = await getAuth().verifyIdToken(token);
-
-    logger.info(`Auth verified: ${decodedToken.uid}`);
-    c.set('firebaseUser', decodedToken);
+function firebaseAuth(tenantOf: HonoTenantOf | null) {
+  return createMiddleware<FirebaseEnv>(async (c, next) => {
+    const tenant = tenantOf ? (tenantOf(c) ?? undefined) : null;
+    const outcome = await authenticateBearer(c.req.header('Authorization'), tenant);
+    if (!outcome.ok) return c.json({ error: outcome.error }, outcome.status);
+    c.set('firebaseUser', outcome.user);
     await next();
-  } catch (error) {
-    logger.warn(`Auth failed: ${error instanceof Error ? error.message : String(error)}`);
-    return c.json({ error: 'Unauthorized' }, 401);
-  }
-});
+  });
+}
+
+/** Project-level routes (the Studio's own users); a published app's tenant tokens are refused. */
+export const authenticateFirebase = firebaseAuth(null);
+
+/** Routes of a published app: tokens must belong to the app's Identity Platform tenant. */
+export function authenticateFirebaseForTenant(tenantOf: HonoTenantOf) {
+  return firebaseAuth(tenantOf);
+}

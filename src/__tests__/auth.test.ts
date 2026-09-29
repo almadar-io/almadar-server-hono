@@ -1,83 +1,61 @@
+/**
+ * The Hono auth middlewares are adapters over `@almadar/server`'s `authenticateBearer`, the one
+ * verification the Express middlewares use too (its rules — dev bypass, project vs tenant tokens —
+ * are tested there). Here: each middleware passes the right tenant, sets the user on success and
+ * answers the outcome's status on refusal.
+ */
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Hono } from 'hono';
 
-// Mock @almadar/server before importing our module
+const authenticateBearer = vi.fn();
+
 vi.mock('@almadar/server', () => ({
-  // The middleware gates its dev bypass on ALLOW_DEV_AUTH_BYPASS (fail-closed),
-  // NOT on NODE_ENV.
-  env: { NODE_ENV: 'development', ALLOW_DEV_AUTH_BYPASS: 'true' },
-  logger: {
-    debug: vi.fn(),
-    info: vi.fn(),
-    warn: vi.fn(),
-    error: vi.fn(),
-  },
-  // auth.ts delegates the dev bypass to the shared resolveDevIdentity
-  // (commit afb1f22); mirror its contract: dev identity only when no
-  // Authorization header, undefined otherwise so the real verify path runs.
-  resolveDevIdentity: vi.fn((authorization?: string) =>
-    authorization === undefined || authorization === ''
-      ? { uid: 'dev-user-001', email: 'dev@localhost' }
-      : undefined),
-  getAuth: vi.fn(() => ({
-    verifyIdToken: vi.fn().mockResolvedValue({
-      uid: 'real-user-123',
-      email: 'real@example.com',
-      email_verified: true,
-      aud: 'test-project',
-      auth_time: Math.floor(Date.now() / 1000),
-      exp: Math.floor(Date.now() / 1000) + 3600,
-      iat: Math.floor(Date.now() / 1000),
-      iss: 'https://securetoken.google.com/test-project',
-      sub: 'real-user-123',
-      firebase: { identities: {}, sign_in_provider: 'password' },
-    }),
-  })),
+  authenticateBearer: (authorization: string | undefined, tenant: string | null | undefined) => authenticateBearer(authorization, tenant),
 }));
 
-import { authenticateFirebase } from '../middleware/auth.js';
+import { authenticateFirebase, authenticateFirebaseForTenant } from '../middleware/auth.js';
 import type { FirebaseEnv } from '../types.js';
 
-interface UserResponse {
-  uid: string;
-  email?: string;
+function app(middleware: typeof authenticateFirebase) {
+  const hono = new Hono<FirebaseEnv>();
+  hono.use('*', middleware);
+  hono.get('/me', (c) => c.json({ uid: c.get('firebaseUser').uid }));
+  return hono;
 }
 
-describe('authenticateFirebase', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
+beforeEach(() => {
+  authenticateBearer.mockReset();
+});
+
+describe('authenticateFirebase (project-level)', () => {
+  it('verifies the bearer as a project token and sets the user', async () => {
+    authenticateBearer.mockResolvedValue({ ok: true, user: { uid: 'real-user-123' } });
+    const res = await app(authenticateFirebase).request('/me', { headers: { Authorization: 'Bearer t' } });
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ uid: 'real-user-123' });
+    expect(authenticateBearer).toHaveBeenCalledWith('Bearer t', null);
   });
 
-  it('injects dev user when ALLOW_DEV_AUTH_BYPASS=true without auth header', async () => {
-    const app = new Hono<FirebaseEnv>();
-    app.use('*', authenticateFirebase);
-    app.get('/test', (c) => {
-      const user = c.get('firebaseUser');
-      return c.json({ uid: user.uid, email: user.email });
-    });
+  it('control: a refused bearer answers the outcome status and error', async () => {
+    authenticateBearer.mockResolvedValue({ ok: false, status: 401, error: 'Unauthorized' });
+    const res = await app(authenticateFirebase).request('/me', { headers: { Authorization: 'Bearer t' } });
+    expect(res.status).toBe(401);
+    expect(await res.json()).toEqual({ error: 'Unauthorized' });
+  });
+});
 
-    const res = await app.request('/test');
+describe('authenticateFirebaseForTenant', () => {
+  it('passes the tenant resolved for the request', async () => {
+    authenticateBearer.mockResolvedValue({ ok: true, user: { uid: 'alice' } });
+    const res = await app(authenticateFirebaseForTenant(() => 'tenant-a')).request('/me', { headers: { Authorization: 'Bearer t' } });
     expect(res.status).toBe(200);
-
-    const body = (await res.json()) as UserResponse;
-    expect(body.uid).toBe('dev-user-001');
-    expect(body.email).toBe('dev@localhost');
+    expect(authenticateBearer).toHaveBeenCalledWith('Bearer t', 'tenant-a');
   });
 
-  it('verifies real token when Authorization header is present', async () => {
-    const app = new Hono<FirebaseEnv>();
-    app.use('*', authenticateFirebase);
-    app.get('/test', (c) => {
-      const user = c.get('firebaseUser');
-      return c.json({ uid: user.uid });
-    });
-
-    const res = await app.request('/test', {
-      headers: { Authorization: 'Bearer valid-token-123' },
-    });
-    expect(res.status).toBe(200);
-
-    const body = (await res.json()) as UserResponse;
-    expect(body.uid).toBe('real-user-123');
+  it('edge: a request that belongs to no tenant is passed as undefined (always refused)', async () => {
+    authenticateBearer.mockResolvedValue({ ok: false, status: 401, error: 'This app has no sign-in tenant' });
+    const res = await app(authenticateFirebaseForTenant(() => null)).request('/me', { headers: { Authorization: 'Bearer t' } });
+    expect(res.status).toBe(401);
+    expect(authenticateBearer).toHaveBeenCalledWith('Bearer t', undefined);
   });
 });

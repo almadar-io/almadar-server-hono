@@ -27,7 +27,7 @@ export {
 
 // ─── Hono-native middleware (replaces Express versions) ─────────────────────
 export { errorHandler, notFoundHandler } from './middleware/error-handler.js';
-export { authenticateFirebase } from './middleware/auth.js';
+export { authenticateFirebase, authenticateFirebaseForTenant, type HonoTenantOf } from './middleware/auth.js';
 export { validateBody, validateQuery, validateParams } from './middleware/validation.js';
 
 // ─── Hono-native routers (replaces Express versions) ────────────────────────
