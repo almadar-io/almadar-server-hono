@@ -1,6 +1,6 @@
 {
   "name": "@almadar/server-hono",
-  "version": "0.4.18",
+  "version": "0.4.19",
   "description": "Hono server infrastructure for Almadar applications",
   "type": "module",
   "main": "./dist/index.js",
@@ -28,16 +28,16 @@
     "prepare": "git config core.hooksPath .githooks"
   },
   "dependencies": {
-    "@almadar/auth": "^0.1.0",
-    "@almadar/core": "^10.111.0",
-    "@almadar/db": "^0.1.0",
-    "@almadar/logger": "^1.15.0",
-    "@almadar/server": "^2.50.0",
+    "@almadar/auth": "^0.1.1",
+    "@almadar/core": "^10.120.0",
+    "@almadar/db": "^0.1.1",
+    "@almadar/logger": "^1.17.0",
+    "@almadar/server": "^2.55.0",
     "hono": "^4.7.0",
     "zod": "^3.24.0"
   },
   "peerDependencies": {
-    "@almadar-io/rabit": "^0.65.46",
+    "@almadar-io/rabit": "^0.65.54",
     "@hono/zod-validator": ">=0.4.0"
   },
   "peerDependenciesMeta": {
@@ -46,7 +46,7 @@
     }
   },
   "devDependencies": {
-    "@almadar/eslint-plugin": "^2.20.0",
+    "@almadar/eslint-plugin": "^2.21.0",
     "@hono/zod-validator": "^0.4.0",
     "@types/node": "^20.0.0",
     "@typescript-eslint/parser": "8.65.0",
