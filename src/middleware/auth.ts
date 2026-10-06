@@ -16,7 +16,7 @@ function firebaseAuth(tenantOf: HonoTenantOf | null) {
     const tenant = tenantOf ? (tenantOf(c) ?? undefined) : null;
     const outcome = await authenticateBearer(c.req.header('Authorization'), tenant);
     if (!outcome.ok) return c.json({ error: outcome.error }, outcome.status);
-    c.set('firebaseUser', outcome.user);
+    c.set('authUser', outcome.user);
     await next();
   });
 }
@@ -28,3 +28,17 @@ export const authenticateFirebase = firebaseAuth(null);
 export function authenticateFirebaseForTenant(tenantOf: HonoTenantOf) {
   return firebaseAuth(tenantOf);
 }
+
+/**
+ * Routes open to anonymous visitors: no `Authorization` header goes on with no `authUser`
+ * (anonymous); a credential that is present must verify, or the request is refused.
+ */
+export const identifyBearer = createMiddleware<FirebaseEnv>(async (c, next) => {
+  const authorization = c.req.header('Authorization');
+  if (authorization !== undefined) {
+    const outcome = await authenticateBearer(authorization, null);
+    if (!outcome.ok) return c.json({ error: outcome.error }, outcome.status);
+    c.set('authUser', outcome.user);
+  }
+  await next();
+});

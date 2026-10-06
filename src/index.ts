@@ -27,11 +27,12 @@ export {
 
 // ─── Hono-native middleware (replaces Express versions) ─────────────────────
 export { errorHandler, notFoundHandler } from './middleware/error-handler.js';
-export { authenticateFirebase, authenticateFirebaseForTenant, type HonoTenantOf } from './middleware/auth.js';
+export { authenticateFirebase, authenticateFirebaseForTenant, identifyBearer, type HonoTenantOf } from './middleware/auth.js';
 export { validateBody, validateQuery, validateParams } from './middleware/validation.js';
 
 // ─── Hono-native routers (replaces Express versions) ────────────────────────
 export { debugEventsRouter } from './lib/debug-router.js';
+export { personasRouter } from './routes/personas.js';
 export { observabilityRouter } from './routes/observability.js';
 export { pushRouter, pushServiceWorkerHandler } from './routes/push.js';
 export { createHooksRouter } from './routes/hooks.js';
@@ -40,7 +41,8 @@ export type { HookProvider, HookDispatch, HooksRouterOptions } from './routes/ho
 
 // ─── Push server surface (re-exported from @almadar/server) ─────────────────
 export { vapidPublicKey, PUSH_SERVICE_WORKER_SOURCE, PUSH_SERVICE_WORKER_PATH } from '@almadar/server';
-export { FirestoreCredentialPersistence, FirestorePendingGrantStore, type FirestorePendingGrantStoreOptions } from '@almadar/server';
+export { FirestoreCredentialPersistence } from '@almadar/db';
+export { FirestorePendingGrantStore, type FirestorePendingGrantStoreOptions } from '@almadar/server';
 export {
   renderReport,
   renderCsv,
@@ -62,6 +64,7 @@ export { env } from '@almadar/server';
 export { logger } from '@almadar/server';
 export {
   validateIntegrationEnv,
+  validateDeploymentEnv,
   integrationHealthChecks,
   type IntegrationHealthCheck,
 } from '@almadar/server';
@@ -89,7 +92,7 @@ export {
   type EventPersistenceOptions,
   type IEventStore,
 } from '@almadar/server';
-export { initializeFirebase, getFirestore, getAuth, db } from '@almadar/server';
+export { initializeFirebase, getFirestore, getAuth, db } from '@almadar/db/firebase';
 export {
   setupEventBroadcast,
   getWebSocketServer,

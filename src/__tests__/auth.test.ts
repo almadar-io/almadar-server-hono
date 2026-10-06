@@ -13,13 +13,13 @@ vi.mock('@almadar/server', () => ({
   authenticateBearer: (authorization: string | undefined, tenant: string | null | undefined) => authenticateBearer(authorization, tenant),
 }));
 
-import { authenticateFirebase, authenticateFirebaseForTenant } from '../middleware/auth.js';
+import { authenticateFirebase, authenticateFirebaseForTenant, identifyBearer } from '../middleware/auth.js';
 import type { FirebaseEnv } from '../types.js';
 
 function app(middleware: typeof authenticateFirebase) {
   const hono = new Hono<FirebaseEnv>();
   hono.use('*', middleware);
-  hono.get('/me', (c) => c.json({ uid: c.get('firebaseUser').uid }));
+  hono.get('/me', (c) => c.json({ uid: c.get('authUser')?.uid ?? null }));
   return hono;
 }
 
@@ -57,5 +57,27 @@ describe('authenticateFirebaseForTenant', () => {
     const res = await app(authenticateFirebaseForTenant(() => null)).request('/me', { headers: { Authorization: 'Bearer t' } });
     expect(res.status).toBe(401);
     expect(authenticateBearer).toHaveBeenCalledWith('Bearer t', undefined);
+  });
+});
+
+describe('identifyBearer (routes open to anonymous visitors)', () => {
+  it('no credential is anonymous and never verified', async () => {
+    const res = await app(identifyBearer).request('/me');
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ uid: null });
+    expect(authenticateBearer).not.toHaveBeenCalled();
+  });
+
+  it('a valid bearer is the verified user', async () => {
+    authenticateBearer.mockResolvedValue({ ok: true, user: { uid: 'alice' } });
+    const res = await app(identifyBearer).request('/me', { headers: { Authorization: 'Bearer t' } });
+    expect(await res.json()).toEqual({ uid: 'alice' });
+    expect(authenticateBearer).toHaveBeenCalledWith('Bearer t', null);
+  });
+
+  it('control: a credential that fails is refused, not downgraded to anonymous', async () => {
+    authenticateBearer.mockResolvedValue({ ok: false, status: 401, error: 'Unauthorized' });
+    const res = await app(identifyBearer).request('/me', { headers: { Authorization: 'Bearer bad' } });
+    expect(res.status).toBe(401);
   });
 });

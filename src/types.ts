@@ -1,4 +1,4 @@
-import type { DecodedIdToken } from 'firebase-admin/auth';
+import type { VerifiedUser } from '@almadar/auth';
 
 export interface UserContext {
   uid: string;
@@ -9,7 +9,8 @@ export interface UserContext {
 }
 
 export type FirebaseVariables = {
-  firebaseUser: DecodedIdToken;
+  /** Set by the auth middlewares; absent on an anonymous request through `identifyBearer`. */
+  authUser: VerifiedUser | undefined;
 };
 
 export type UserContextVariables = FirebaseVariables & {
