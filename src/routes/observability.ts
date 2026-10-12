@@ -56,29 +56,5 @@ app.get('/health', async (c) => {
   }
 });
 
-/**
- * GET /sessions/:threadId/telemetry - Get session telemetry
- */
-app.get('/sessions/:threadId/telemetry', async (c) => {
-  return c.json(
-    {
-      error: 'Session telemetry is deprecated. Use @almadar-io/rabit trace events instead.',
-    },
-    501,
-  );
-});
-
-/**
- * GET /active-sessions - Get active sessions
- */
-app.get('/active-sessions', async (c) => {
-  return c.json(
-    {
-      error: 'Active sessions tracking is deprecated. Use @almadar-io/rabit SessionStore instead.',
-    },
-    501,
-  );
-});
-
 export { app as observabilityRouter };
 export default app;

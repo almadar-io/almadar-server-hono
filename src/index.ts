@@ -170,12 +170,3 @@ export type {
   ServiceDiscoveryContract,
   ServerServiceContracts,
 } from '@almadar/server';
-
-// ─── Rabit compatibility exports (re-exported from @almadar/server) ─────────
-export {
-  getOrbitalMemory,
-  resetOrbitalMemory,
-  getSessionStore,
-  resetSessionStore,
-  createServerSkillAgent,
-} from '@almadar/server';
